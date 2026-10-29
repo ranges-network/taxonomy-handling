@@ -1,8 +1,8 @@
 # Ranges Network - Taxonomy Handling
 
-## Script Explanations
+## Repo Explanations
 
-- TBD
+- `problem-explore/` -- Explore solutions to known taxonomic 'problems'
 
 ## Related Links
 
