@@ -11,6 +11,7 @@
 # Create necessary data-related folders
 dir.create(path = file.path("data", "mdd"), showWarnings = FALSE, recursive = TRUE)
 dir.create(path = file.path("data", "diagnostic"), showWarnings = FALSE)
+dir.create(path = file.path("data", "revision-quarantine"), showWarnings = FALSE)
 
 # Create non-data folders
 dir.create(path = file.path("graphs"), showWarnings = FALSE)

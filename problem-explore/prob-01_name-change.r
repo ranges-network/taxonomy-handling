@@ -136,6 +136,6 @@ dplyr::glimpse(rng_df_revized)
 
 # Export it locally
 write.csv(rng_df_revized, row.names = FALSE, na = "",
-  file.path("data", paste0("Ranges_Baseline_Traits_Jan-Feb2024", "_updated-on-", Sys.Date(), ".csv")))
+  file.path("data", "revision-quarantine", paste0("Ranges_Baseline_Traits_Jan-Feb2024", "_updated-on-", Sys.Date(), ".csv")))
 
 # End ----
