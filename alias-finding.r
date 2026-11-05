@@ -41,37 +41,11 @@ dplyr::glimpse(syn_sub)
 # Function Explore ----
 ## ---------------------------------- ##
 
-# Write custom function
-find_alias <- function(mdd_syn = NULL, sp = NULL){
+# Load function
+source(file.path("tools", "find-alias.r"))
 
-  # Errors for 'mdd_syn'
-  if(is.null(mdd_syn) || "data.frame" %in% class(mdd_syn) != TRUE ||
-    all(c("MDD_species", "MDD_normalized_original_combination", "MDD_nomenclature_status") %in% names(mdd_syn)) != TRUE)
-    stop("'mdd_syn' must be data.frame-like and include 'MDD_species', 'MDD_normalized_original_combination', and 'MDD_nomenclature_status' columns")
-
-  # Errors for 'sp'
-  if(is.null(sp) || is.character(sp) != TRUE || length(sp) > 1 || 
-      stringr::str_count(string = sp, pattern = " ") != 1)
-    stop("'sp' must be a single species name with genus and specific epithet separated by a space")
-
-  # Pare down to just the bits of interest
-  syn_sub <- mdd_syn %>% 
-    dplyr::filter(MDD_species == sp) %>%
-    dplyr::filter(MDD_species != MDD_normalized_original_combination) %>% 
-    dplyr::select(MDD_species, MDD_normalized_original_combination, MDD_nomenclature_status)
-
-  # Grab out the 'bad' names
-  syn_vec <- syn_sub$MDD_normalized_original_combination
-
-  # Warn if there's nothing
-  if(length(syn_vec) == 0)
-    warning("No aliases discovered.")
-  
-  # Return the vector either way though
-  return(syn_vec)
-}
-
-find_alias(mdd_syn = mdd, sp = focal_tax)
+# Invoke function
+find_alias(mdd = mdd, sp = focal_tax)
 
 
 ## ---------------------------------- ##
