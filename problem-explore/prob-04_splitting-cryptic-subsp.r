@@ -20,4 +20,10 @@ rm(list = ls()); gc()
 ## ---------------------------------- ##
 
 
+
+
+# Useful MDD columns
+# typeLocalityLatitude
+# typeLocalityLongitude
+
 # End ----
