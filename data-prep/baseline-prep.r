@@ -87,21 +87,32 @@ tax_v02 <- tax_v01 %>%
 # Check structure
 dplyr::glimpse(tax_v02)
 
+# Do some useful wrangling of the taxonomy data now
+tax_v03 <- tax_v02 %>%
+  dplyr::mutate(nameAuthority = stringr::str_extract(string = scientificName, pattern = "\\s*\\([^)]*\\)")) %>% 
+  dplyr::mutate(nameAuthority = gsub(pattern = "\\s*\\(|\\)", replacement = "", x = nameAuthority)) %>% 
+  dplyr::mutate(scientificName = gsub("\\s*\\([^)]*\\)", "", scientificName)) %>% 
+  dplyr::relocate(scientificName, occurrenceIdentifiers,
+    .after = dplyr::everything())
+
+# Check structure
+dplyr::glimpse(tax_v03)
+
 ## ---------------------------------- ##
 # Quality Control Check ----
 ## ---------------------------------- ##
 
 # Confirm that no columns were lost
-## Should only be the new 'occurrenceIdentifiers' column from the taxonomy data
-supportR::diff_check(old = names(baseline_df), new = c(names(trait_v03), names(tax_v02)))
+## Should only be the new taxonomy columns
+supportR::diff_check(old = names(baseline_df), new = c(names(trait_v03), names(tax_v03)))
 
 # See what was in baseline but not in trait data
 ## Should just be taxonomic columns
 supportR::diff_check(old = names(baseline_df), new = names(trait_v03))
 
 # See what was in baseline but not in taxonomy data
-## Should be all trait columns (again, plus the new ID column)
-supportR::diff_check(old = names(baseline_df), new = names(tax_v02))
+## Should be all trait columns (again, plus the new tax column)
+supportR::diff_check(old = names(baseline_df), new = names(tax_v03))
 
 ## ---------------------------------- ##
 # Export ----
@@ -112,7 +123,7 @@ write.csv(x = trait_v03, row.names = FALSE, na = "",
   file = file.path("data", "ranges_traits-only.csv"))
 
 # Export taxonomic data
-write.csv(x = tax_v02, row.names = FALSE, na = "",
+write.csv(x = tax_v03, row.names = FALSE, na = "",
   file = file.path("data", "ranges_taxonomy-only.csv"))
 
 # End ----
