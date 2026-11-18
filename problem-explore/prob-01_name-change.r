@@ -7,7 +7,7 @@
 
 # Load libraries
 # install.packages("tidyverse")
-librarian::shelf(tidyverse)
+librarian::shelf(tidyverse, supportR)
 
 # Get set up
 source(file = file.path("-setup.r"))
